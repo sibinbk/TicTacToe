@@ -20,7 +20,7 @@ class BoardViewController: UICollectionViewController {
     let boardSize = 8
     var gameArray = [[GameCellItem]]()
     var gameFininshed = false
-    var turnCount = 0
+    var takenCellCount = 0
     var currentPlayer = Player.Player1
     var infoLabel: UILabel!
     
@@ -93,26 +93,30 @@ class BoardViewController: UICollectionViewController {
     // MARK: UICollectionViewDelegate
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        drawMarkForSpot(indexPath, player: currentPlayer)
-        collectionView.reloadItemsAtIndexPaths([indexPath])
-    }
-    
-    func drawMarkForSpot(indexPath: NSIndexPath, player: Player) {
-        let playerMark = player == .Player1 ? "X" : "O"
         let gameCellItem = gameArray[indexPath.section][indexPath.row]
+       
+        // check if already selected
         if gameCellItem.isTaken {
-            print("Cell already selected. Choose another cell")
             return
         }
-        gameCellItem.title = playerMark
+        
+        // Mark cell with corresponding indicator.
+        gameCellItem.title = currentPlayer == .Player1 ? "X" : "O"
         gameCellItem.isTaken = true
         gameArray[indexPath.section][indexPath.row] = gameCellItem
-        checkForWinForRow(indexPath.section, column: indexPath.row)
-        switchTurn()
+        
+        collectionView.reloadItemsAtIndexPaths([indexPath])
+        
+        // Check if player won
+        checkForWinForIndexPath(indexPath)
+        
+        // Switch players' turn
+        switchPlayerTurn()
     }
     
-    func checkForWinForRow(row: Int, column: Int) {
-        
+    func checkForWinForIndexPath(indexPath: NSIndexPath) {
+        let row = indexPath.section
+        let column = indexPath.row
         print("Row:\(row), Column:\(column)")
         
         var rowCheckWon = true
@@ -156,19 +160,45 @@ class BoardViewController: UICollectionViewController {
             }
         }
 
+        // Increment cell taken count.
+        takenCellCount += 1
+        
         if rowCheckWon || columnCheckWon || leftDiagonalWon || rightDiagonalWon {
-            infoLabel.text = "\(currentPlayer) has won!"
-            gameFininshed = true
-            reInitialiseBoard()
+            // Hide player's turn label
+            infoLabel.hidden = true
+            
+            let info = "\(currentPlayer) has won"
+            
+            let alertController = UIAlertController(title: "Congratulations!", message: info, preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: "Play Again", style: .Cancel) { (action:UIAlertAction!) in
+                self.gameFininshed = true
+                self.reInitialiseBoard()
+            }
+            alertController.addAction(cancelAction)
+            
+            self.presentViewController(alertController, animated: true, completion:nil)
+        } else if takenCellCount == (boardSize * boardSize) {
+            // Hide player's turn label
+            infoLabel.hidden = true
+            
+            let alertController = UIAlertController(title: "Oh!", message: "Looks like it is a tie", preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: "Play Again", style: .Cancel) { (action:UIAlertAction!) in
+                self.gameFininshed = true
+                self.reInitialiseBoard()
+            }
+            alertController.addAction(cancelAction)
+            
+            self.presentViewController(alertController, animated: true, completion:nil)
         }
     }
     
-    func switchTurn() {
+    func switchPlayerTurn() {
         if gameFininshed {
             return
         }
-        
-        turnCount += 1
+        print("changes player")
         currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
         infoLabel.text = "\(currentPlayer) 's turn"
     }
@@ -177,10 +207,11 @@ class BoardViewController: UICollectionViewController {
         loadGameCellArray()
         // Reset current player
         currentPlayer = .Player1
-        turnCount = 0
+        takenCellCount = 0
         gameFininshed = false
         collectionView?.reloadData()
         infoLabel.text = "\(currentPlayer) 's turn"
+        infoLabel.hidden = false
     }
     
     func loadGameCellArray() {
