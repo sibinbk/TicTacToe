@@ -8,12 +8,12 @@
 
 import UIKit
 
-class GameHistory {    
+class GameHistory {
     var player1WinCount: Int
     var player2WinCount: Int
     var tieCount: Int
     
-    init(player1WinCount: Int, player2WinCount: Int, drawCount: Int) {
+    init(player1WinCount: Int, player2WinCount: Int, tieCount: Int) {
         self.player1WinCount = player1WinCount
         self.player2WinCount = player2WinCount
         self.tieCount = tieCount

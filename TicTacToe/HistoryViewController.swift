@@ -14,10 +14,14 @@ class HistoryViewController: UIViewController {
     @IBOutlet var player2WinsLabel: UILabel!
     @IBOutlet var drawCountLabel: UILabel!
     
+    var history: GameHistory!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        player1WinsLabel.text = history.player1WinCount > 1 ? "\(history.player1WinCount) times" : "\(history.player1WinCount) time"
+        player2WinsLabel.text = history.player2WinCount > 1 ? "\(history.player2WinCount) times" : "\(history.player2WinCount) time"
+        drawCountLabel.text = history.tieCount > 1 ? "\(history.tieCount) times" : "\(history.tieCount) time"
     }
 
     override func didReceiveMemoryWarning() {

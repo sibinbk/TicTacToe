@@ -20,18 +20,18 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
     }
     
     enum WhoWon: Int {
-        case Player1 = 0
-        case Player2 = 1
+        case Player1Won = 0
+        case Player2Won = 1
         case Tie = 2
     }
     
     var boardSize = 3
     var gameArray = [[GameCellItem]]()
-    var gameHistory = GameHistory()
+    var gameHistory: GameHistory!
     var gameFininshed = false
     var takenCellCount = 0
     var currentPlayer = Player.Player1
-    var winner: WhoWon!
+//    var winner = WhoWon.Tie
     var infoLabel: UILabel!
     
     override func viewDidLoad() {
@@ -189,11 +189,11 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
             
             let messageInfo: String
             if currentPlayer == .Player1 {
-                winner = WhoWon.Player1
                 messageInfo = "Player 1 Won"
+                saveGameResult(.Player1Won)
             } else {
-                winner = WhoWon.Player2
-                messageInfo = "Player 1 Won"
+                messageInfo = "Player 2 Won"
+                saveGameResult(.Player2Won)
             }
             
             let alertController = UIAlertController(title: "Game Over!", message: messageInfo, preferredStyle: .Alert)
@@ -208,8 +208,8 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         } else if takenCellCount == (boardSize * boardSize) {
             // Hide player's turn label
             infoLabel.hidden = true
-            
-            winner = WhoWon.Tie
+
+            saveGameResult(.Tie)
             
             let alertController = UIAlertController(title: "Game Over!", message: "It's a Tie", preferredStyle: .Alert)
             
@@ -231,18 +231,18 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         infoLabel.text = "\(currentPlayer) 's turn"
     }
     
-    func saveGameResult() {
+    func saveGameResult(winner: WhoWon) {
         switch winner {
-        case .Player1:
+        case .Player1Won:
             gameHistory.player1WinCount += 1
-        case .Player2:
+        case .Player2Won:
             gameHistory.player2WinCount += 1
         case .Tie:
             gameHistory.tieCount += 1
         }
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setInteger(gameHistory.player1WinCount + 1, forKey: "Player1WinCount")
+        defaults.setInteger(gameHistory.player1WinCount, forKey: "Player1WinCount")
         defaults.setInteger(gameHistory.player2WinCount, forKey: "Player2WinCount")
         defaults.setInteger(gameHistory.tieCount, forKey: "TieCount")
     }
@@ -252,7 +252,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         let player1Count = defaults.integerForKey("Player1WinCount")
         let player2Count = defaults.integerForKey("Player2WinCount")
         let tieCount = defaults.integerForKey("TieCount")
-        let history = GameHistory(player1WinCount: player1Count, player2WinCount: player2Count, drawCount: tieCount)
+        let history = GameHistory(player1WinCount: player1Count, player2WinCount: player2Count, tieCount: tieCount)
         return history
     }
     
@@ -299,7 +299,14 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
                 destination.boardPickerDelegate = self
             }
         }
+        
+        if segue.identifier == historySegueIdentifier {
+            if let destination = segue.destinationViewController as? HistoryViewController {
+                destination.history = gameHistory
+            }
+        }
     }
+
     
     // MARK: BoardSizeSelectionDelegate
     
