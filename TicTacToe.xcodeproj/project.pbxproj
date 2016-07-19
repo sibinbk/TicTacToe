@@ -13,6 +13,7 @@
 		C3F3090F1D3CDA4C00ADC39E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3F3090D1D3CDA4C00ADC39E /* LaunchScreen.storyboard */; };
 		C3F3091D1D3DCD8700ADC39E /* BoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F3091C1D3DCD8700ADC39E /* BoardCollectionViewCell.swift */; };
 		C3F3091F1D3DDA0600ADC39E /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F3091E1D3DDA0600ADC39E /* BoardViewController.swift */; };
+		C3F309231D3E2EC400ADC39E /* GameCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F309221D3E2EC400ADC39E /* GameCellItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		C3F309101D3CDA4C00ADC39E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3F3091C1D3DCD8700ADC39E /* BoardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewCell.swift; sourceTree = "<group>"; };
 		C3F3091E1D3DDA0600ADC39E /* BoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
+		C3F309221D3E2EC400ADC39E /* GameCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCellItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,64 @@
 		C3F309031D3CDA4C00ADC39E /* TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
-				C3F309041D3CDA4C00ADC39E /* AppDelegate.swift */,
-				C3F3091E1D3DDA0600ADC39E /* BoardViewController.swift */,
-				C3F3091C1D3DCD8700ADC39E /* BoardCollectionViewCell.swift */,
-				C3F309081D3CDA4C00ADC39E /* Main.storyboard */,
-				C3F3090B1D3CDA4C00ADC39E /* Assets.xcassets */,
-				C3F3090D1D3CDA4C00ADC39E /* LaunchScreen.storyboard */,
-				C3F309101D3CDA4C00ADC39E /* Info.plist */,
+				C3F309201D3E2E5800ADC39E /* Controllers */,
+				C3F309271D3E2F2300ADC39E /* Layout */,
+				C3F309211D3E2E7300ADC39E /* Model */,
+				C3F309261D3E2F0A00ADC39E /* UIs */,
+				C3F309251D3E2EED00ADC39E /* Resources */,
+				C3F309241D3E2EDB00ADC39E /* SupportingFiles */,
 			);
 			path = TicTacToe;
+			sourceTree = "<group>";
+		};
+		C3F309201D3E2E5800ADC39E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C3F3091E1D3DDA0600ADC39E /* BoardViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		C3F309211D3E2E7300ADC39E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C3F309221D3E2EC400ADC39E /* GameCellItem.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C3F309241D3E2EDB00ADC39E /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				C3F309041D3CDA4C00ADC39E /* AppDelegate.swift */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		C3F309251D3E2EED00ADC39E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C3F3090B1D3CDA4C00ADC39E /* Assets.xcassets */,
+				C3F309101D3CDA4C00ADC39E /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C3F309261D3E2F0A00ADC39E /* UIs */ = {
+			isa = PBXGroup;
+			children = (
+				C3F3090D1D3CDA4C00ADC39E /* LaunchScreen.storyboard */,
+				C3F309081D3CDA4C00ADC39E /* Main.storyboard */,
+			);
+			name = UIs;
+			sourceTree = "<group>";
+		};
+		C3F309271D3E2F2300ADC39E /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				C3F3091C1D3DCD8700ADC39E /* BoardCollectionViewCell.swift */,
+			);
+			name = Layout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +192,7 @@
 				C3F309051D3CDA4C00ADC39E /* AppDelegate.swift in Sources */,
 				C3F3091D1D3DCD8700ADC39E /* BoardCollectionViewCell.swift in Sources */,
 				C3F3091F1D3DDA0600ADC39E /* BoardViewController.swift in Sources */,
+				C3F309231D3E2EC400ADC39E /* GameCellItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
