@@ -66,16 +66,176 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Tic Tac Toe" id="qOv-HC-7uD">
+                        <barButtonItem key="leftBarButtonItem" title="Select Grid" id="rE0-tt-mgi">
+                            <connections>
+                                <action selector="selectGridSize:" destination="MBn-Cc-bfF" id="UII-dd-asO"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Reset" id="4FX-GI-ZgN">
                             <connections>
                                 <action selector="resetGame:" destination="MBn-Cc-bfF" id="fkb-lh-cIr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="hvG-rZ-PsS" kind="presentation" identifier="GridSelectionSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="Uwc-au-BpD"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LF7-Fg-5x4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="913" y="357"/>
+        </scene>
+        <!--Board Size Selection Controller-->
+        <scene sceneID="X8r-oU-kyr">
+            <objects>
+                <viewController id="hvG-rZ-PsS" customClass="BoardSizeSelectionController" customModule="TicTacToe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2gw-j6-53j"/>
+                        <viewControllerLayoutGuide type="bottom" id="Gkt-Yv-kVA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qw1-5m-a5b">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chose A Grid" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ac-Wv-gXX">
+                                <rect key="frame" x="221" y="89" width="159" height="36"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="26"/>
+                                <color key="textColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJC-3G-RGt">
+                                <rect key="frame" x="240" y="155" width="120" height="50"/>
+                                <color key="backgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Jqb-3J-JSk"/>
+                                    <constraint firstAttribute="height" constant="50" id="eWr-97-1bS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="3 X 3">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="gridSelectionButtonPressed:" destination="hvG-rZ-PsS" eventType="touchUpInside" id="srv-Qz-Gwc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGO-W6-BHj">
+                                <rect key="frame" x="240" y="275" width="120" height="50"/>
+                                <color key="backgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="5 X 5">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="gridSelectionButtonPressed:" destination="hvG-rZ-PsS" eventType="touchUpInside" id="Cob-eF-JYc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrY-do-0bz">
+                                <rect key="frame" x="240" y="335" width="120" height="50"/>
+                                <color key="backgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="6 X 6">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="gridSelectionButtonPressed:" destination="hvG-rZ-PsS" eventType="touchUpInside" id="Oul-YH-Jae"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xDw-30-wH5">
+                                <rect key="frame" x="240" y="395" width="120" height="50"/>
+                                <color key="backgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="7 X 7">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="gridSelectionButtonPressed:" destination="hvG-rZ-PsS" eventType="touchUpInside" id="u2d-cs-lvl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6nU-bm-t8V">
+                                <rect key="frame" x="240" y="455" width="120" height="50"/>
+                                <color key="backgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="8 X 8">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="gridSelectionButtonPressed:" destination="hvG-rZ-PsS" eventType="touchUpInside" id="0BS-rJ-isz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOt-tA-eIQ">
+                                <rect key="frame" x="240" y="217" width="120" height="50"/>
+                                <color key="backgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="4 X 4">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="gridSelectionButtonPressed:" destination="hvG-rZ-PsS" eventType="touchUpInside" id="PCn-iT-Hin"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QOt-tA-eIQ" firstAttribute="top" secondItem="DJC-3G-RGt" secondAttribute="bottom" constant="10" id="0dR-cw-E9T"/>
+                            <constraint firstItem="wGO-W6-BHj" firstAttribute="top" secondItem="QOt-tA-eIQ" secondAttribute="bottom" constant="10" id="1Dw-vL-gWa"/>
+                            <constraint firstItem="QOt-tA-eIQ" firstAttribute="centerX" secondItem="qw1-5m-a5b" secondAttribute="centerX" id="2Xa-C6-O36"/>
+                            <constraint firstItem="xDw-30-wH5" firstAttribute="top" secondItem="qrY-do-0bz" secondAttribute="bottom" constant="10" id="5qg-QR-RiG"/>
+                            <constraint firstItem="wGO-W6-BHj" firstAttribute="centerX" secondItem="qw1-5m-a5b" secondAttribute="centerX" id="6h5-dR-cEJ"/>
+                            <constraint firstItem="qrY-do-0bz" firstAttribute="top" secondItem="wGO-W6-BHj" secondAttribute="bottom" constant="10" id="Aeg-Gq-xR8"/>
+                            <constraint firstItem="wGO-W6-BHj" firstAttribute="height" secondItem="DJC-3G-RGt" secondAttribute="height" id="Bvk-Wz-OkU"/>
+                            <constraint firstItem="qrY-do-0bz" firstAttribute="centerX" secondItem="qw1-5m-a5b" secondAttribute="centerX" id="CAY-RH-MEZ"/>
+                            <constraint firstItem="xDw-30-wH5" firstAttribute="height" secondItem="DJC-3G-RGt" secondAttribute="height" id="EnB-Nt-hOm"/>
+                            <constraint firstItem="QOt-tA-eIQ" firstAttribute="width" secondItem="DJC-3G-RGt" secondAttribute="width" id="F6m-yN-ZBj"/>
+                            <constraint firstItem="DJC-3G-RGt" firstAttribute="top" secondItem="1ac-Wv-gXX" secondAttribute="bottom" constant="30" id="G1h-pt-ymp"/>
+                            <constraint firstItem="wGO-W6-BHj" firstAttribute="width" secondItem="DJC-3G-RGt" secondAttribute="width" id="GRL-eH-JFa"/>
+                            <constraint firstItem="6nU-bm-t8V" firstAttribute="top" secondItem="xDw-30-wH5" secondAttribute="bottom" constant="10" id="Jwy-04-owq"/>
+                            <constraint firstItem="6nU-bm-t8V" firstAttribute="height" secondItem="DJC-3G-RGt" secondAttribute="height" id="P1R-FW-kyy"/>
+                            <constraint firstItem="wGO-W6-BHj" firstAttribute="centerY" secondItem="qw1-5m-a5b" secondAttribute="centerY" id="T1D-9w-RdG"/>
+                            <constraint firstItem="qrY-do-0bz" firstAttribute="height" secondItem="DJC-3G-RGt" secondAttribute="height" id="VC7-Zg-SX8"/>
+                            <constraint firstItem="xDw-30-wH5" firstAttribute="centerX" secondItem="qw1-5m-a5b" secondAttribute="centerX" id="cMi-ra-FoW"/>
+                            <constraint firstItem="xDw-30-wH5" firstAttribute="width" secondItem="DJC-3G-RGt" secondAttribute="width" id="efv-o9-hlu"/>
+                            <constraint firstItem="6nU-bm-t8V" firstAttribute="width" secondItem="DJC-3G-RGt" secondAttribute="width" id="h5D-pv-DcO"/>
+                            <constraint firstItem="qrY-do-0bz" firstAttribute="width" secondItem="DJC-3G-RGt" secondAttribute="width" id="jIi-xr-YGL"/>
+                            <constraint firstItem="DJC-3G-RGt" firstAttribute="centerX" secondItem="qw1-5m-a5b" secondAttribute="centerX" id="tXL-kR-4wr"/>
+                            <constraint firstItem="1ac-Wv-gXX" firstAttribute="centerX" secondItem="qw1-5m-a5b" secondAttribute="centerX" id="vDD-Dm-qjw"/>
+                            <constraint firstItem="6nU-bm-t8V" firstAttribute="centerX" secondItem="qw1-5m-a5b" secondAttribute="centerX" id="wIy-0R-lhe"/>
+                            <constraint firstItem="QOt-tA-eIQ" firstAttribute="height" secondItem="DJC-3G-RGt" secondAttribute="height" id="zOb-Ny-ehe"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ANt-fb-uMc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1590" y="349"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LOx-Mk-TBs">

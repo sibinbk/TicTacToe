@@ -9,15 +9,16 @@
 import UIKit
 
 private let reuseIdentifier = "BoardCell"
+private let gridSegueIdentifier = "GridSelectionSegue"
 
-class BoardViewController: UICollectionViewController {
+class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegate {
 
     enum Player: Int {
         case Player1 = 0
         case Player2 = 1
     }
     
-    let boardSize = 8
+    var boardSize = 3
     var gameArray = [[GameCellItem]]()
     var gameFininshed = false
     var takenCellCount = 0
@@ -27,6 +28,13 @@ class BoardViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        drawBoardOfSize(boardSize)
+        
+        // Preload array with nil.
+        reInitialiseBoard()
+    }
+
+    func drawBoardOfSize(boardSize: Int) {
         // Resize Cells to fit in the view
         let width = CGRectGetWidth(collectionView!.frame) / CGFloat(boardSize)
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
@@ -50,7 +58,7 @@ class BoardViewController: UICollectionViewController {
         player1Label.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         player1Label.text = "Player1 : X"
         view.addSubview(player1Label)
-
+        
         let player2Label = UILabel(frame: CGRect(origin: CGPoint(x: view.bounds.size.width/2 - 20, y: view.bounds.size.height - 40), size: CGSize(width: view.bounds.size.width/2, height: 40)))
         player2Label.backgroundColor = UIColor.whiteColor()
         player2Label.textColor = UIColor(red: 7/255, green: 185/255, blue: 155/255, alpha: 1)
@@ -60,10 +68,8 @@ class BoardViewController: UICollectionViewController {
         player2Label.text = "Player2 : O"
         view.addSubview(player2Label)
 
-        // Preload array with nil.
-        reInitialiseBoard()
     }
-
+        
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -228,5 +234,29 @@ class BoardViewController: UICollectionViewController {
     
     @IBAction func resetGame(sender: AnyObject) {
         reInitialiseBoard()
+    }
+    
+    @IBAction func selectGridSize(sender: AnyObject) {
+        performSegueWithIdentifier(gridSegueIdentifier, sender: nil)
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == gridSegueIdentifier {
+            if let destination = segue.destinationViewController as? BoardSizeSelectionController {
+                destination.boardPickerDelegate = self
+            }
+        }
+    }
+    
+    // MARK: BoardSizeSelectionDelegate
+    
+    func didSelectBoardOfSize(boardSize: Int) {
+        self.boardSize = boardSize
+        drawBoardOfSize(boardSize)
+        // Preload array with nil.
+        reInitialiseBoard()
+
     }
 }
