@@ -9,7 +9,6 @@
 import UIKit
 
 class GameCellItem {
-
     var title: String
     var isTaken: Bool
     

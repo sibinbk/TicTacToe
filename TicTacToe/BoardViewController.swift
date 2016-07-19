@@ -10,6 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "BoardCell"
 private let gridSegueIdentifier = "GridSelectionSegue"
+private let historySegueIdentifier = "HistoryViewSegue"
 
 class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegate {
 
@@ -18,11 +19,19 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         case Player2 = 1
     }
     
+    enum WhoWon: Int {
+        case Player1 = 0
+        case Player2 = 1
+        case Tie = 2
+    }
+    
     var boardSize = 3
     var gameArray = [[GameCellItem]]()
+    var gameHistory = GameHistory()
     var gameFininshed = false
     var takenCellCount = 0
     var currentPlayer = Player.Player1
+    var winner: WhoWon!
     var infoLabel: UILabel!
     
     override func viewDidLoad() {
@@ -30,6 +39,9 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
 
         // Default board size is # 3
         drawBoardOfSize(boardSize)
+        
+        // Read Game History.
+        gameHistory = loadGameHistory()
     }
 
     func drawBoardOfSize(size: Int) {
@@ -175,9 +187,16 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
             // Hide player's turn label
             infoLabel.hidden = true
             
-            let info = "\(currentPlayer) Won"
+            let messageInfo: String
+            if currentPlayer == .Player1 {
+                winner = WhoWon.Player1
+                messageInfo = "Player 1 Won"
+            } else {
+                winner = WhoWon.Player2
+                messageInfo = "Player 1 Won"
+            }
             
-            let alertController = UIAlertController(title: "Game Over!", message: info, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "Game Over!", message: messageInfo, preferredStyle: .Alert)
             
             let cancelAction = UIAlertAction(title: "Play Again", style: .Cancel) { (action:UIAlertAction!) in
                 self.gameFininshed = true
@@ -189,6 +208,8 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         } else if takenCellCount == (boardSize * boardSize) {
             // Hide player's turn label
             infoLabel.hidden = true
+            
+            winner = WhoWon.Tie
             
             let alertController = UIAlertController(title: "Game Over!", message: "It's a Tie", preferredStyle: .Alert)
             
@@ -208,6 +229,31 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         }
         currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
         infoLabel.text = "\(currentPlayer) 's turn"
+    }
+    
+    func saveGameResult() {
+        switch winner {
+        case .Player1:
+            gameHistory.player1WinCount += 1
+        case .Player2:
+            gameHistory.player2WinCount += 1
+        case .Tie:
+            gameHistory.tieCount += 1
+        }
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(gameHistory.player1WinCount + 1, forKey: "Player1WinCount")
+        defaults.setInteger(gameHistory.player2WinCount, forKey: "Player2WinCount")
+        defaults.setInteger(gameHistory.tieCount, forKey: "TieCount")
+    }
+    
+    func loadGameHistory() -> GameHistory {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let player1Count = defaults.integerForKey("Player1WinCount")
+        let player2Count = defaults.integerForKey("Player2WinCount")
+        let tieCount = defaults.integerForKey("TieCount")
+        let history = GameHistory(player1WinCount: player1Count, player2WinCount: player2Count, drawCount: tieCount)
+        return history
     }
     
     func initialiseBoardValues() {
@@ -239,6 +285,10 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
     
     @IBAction func selectGridSize(sender: AnyObject) {
         performSegueWithIdentifier(gridSegueIdentifier, sender: nil)
+    }
+    
+    @IBAction func showPlayHistory(sender: AnyObject) {
+        performSegueWithIdentifier(historySegueIdentifier, sender: nil)
     }
     
     // MARK: - Navigation
