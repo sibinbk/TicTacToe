@@ -356,6 +356,7 @@
 				C3F309151D3CDA4C00ADC39E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
