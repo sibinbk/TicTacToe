@@ -65,11 +65,17 @@
                             <outlet property="delegate" destination="MBn-Cc-bfF" id="OKq-KM-YZR"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Tic Tac Toe" id="qOv-HC-7uD"/>
+                    <navigationItem key="navigationItem" title="Tic Tac Toe" id="qOv-HC-7uD">
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="4FX-GI-ZgN">
+                            <connections>
+                                <action selector="resetGame:" destination="MBn-Cc-bfF" id="fkb-lh-cIr"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LF7-Fg-5x4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="357"/>
+            <point key="canvasLocation" x="913" y="357"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LOx-Mk-TBs">
