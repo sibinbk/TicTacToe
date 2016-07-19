@@ -60,7 +60,8 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         infoLabel.font = UIFont.boldSystemFontOfSize(30)
         infoLabel.textAlignment = NSTextAlignment.Center
         infoLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        infoLabel.text = "\(currentPlayer) 's turn"
+        let player = currentPlayer == .Player1 ? "Player 1" : "Player 2"
+        infoLabel.text = "\(player) to move"
         view.addSubview(infoLabel)
         
         let player1Label = UILabel(frame: CGRect(origin: CGPoint(x: 20, y: view.bounds.size.height - 40), size: CGSize(width: view.bounds.size.width/2, height: 40)))
@@ -69,7 +70,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         player1Label.font = UIFont.boldSystemFontOfSize(24)
         player1Label.textAlignment = NSTextAlignment.Left
         player1Label.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        player1Label.text = "Player1 : X"
+        player1Label.text = "Player 1 : X"
         view.addSubview(player1Label)
         
         let player2Label = UILabel(frame: CGRect(origin: CGPoint(x: view.bounds.size.width/2 - 20, y: view.bounds.size.height - 40), size: CGSize(width: view.bounds.size.width/2, height: 40)))
@@ -78,7 +79,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         player2Label.font = UIFont.boldSystemFontOfSize(24)
         player2Label.textAlignment = NSTextAlignment.Right
         player2Label.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        player2Label.text = "Player2 : O"
+        player2Label.text = "Player 2 : O"
         view.addSubview(player2Label)
 
         // Preload array with empty cell items.
@@ -227,8 +228,10 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         if gameFininshed {
             return
         }
+        
         currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
-        infoLabel.text = "\(currentPlayer) 's turn"
+        let player = currentPlayer == .Player1 ? "Player 1" : "Player 2"
+        infoLabel.text = "\(player) to move"
     }
     
     func saveGameResult(winner: WhoWon) {
@@ -263,7 +266,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         takenCellCount = 0
         gameFininshed = false
         collectionView?.reloadData()
-        infoLabel.text = "\(currentPlayer) 's turn"
+        infoLabel.text = "Player 1 to move"
         infoLabel.hidden = false
     }
     

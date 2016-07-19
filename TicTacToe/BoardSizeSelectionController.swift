@@ -53,8 +53,6 @@ class BoardSizeSelectionController: UIViewController {
             break
         }
         
-        print(boardSize)
-        
         if let pickerDelagate = boardPickerDelegate {
             pickerDelagate.didSelectBoardOfSize(boardSize)
         }
