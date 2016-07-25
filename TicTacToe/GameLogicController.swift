@@ -14,10 +14,11 @@ class GameLogicController: NSObject {
         case Player2 = 1
     }
     
-    enum WhoWon: Int {
-        case Player1Won = 0
-        case Player2Won = 1
-        case Tie = 2
+    enum GameResult: Int {
+        case NotFinished = 0
+        case Player1Won
+        case Player2Won
+        case Tie
     }
     
     var boardSize: Int = 0 {
@@ -27,18 +28,14 @@ class GameLogicController: NSObject {
     }
     
     var gameArray = [[GameCellItem]]()
-//    var gameHistory: GameHistory!
-    var gameFininshed = false
     var takenCellCount = 0
     var currentPlayer = Player.Player1
-//    var infoLabel: UILabel!
     
     func reInitialize() {
         loadGameCellArray()
         // Reset current player
         currentPlayer = .Player1
         takenCellCount = 0
-        gameFininshed = false
     }
     
     func loadGameCellArray() {
@@ -53,7 +50,7 @@ class GameLogicController: NSObject {
         }
     }
     
-    func checkForWinForIndexPath(indexPath: NSIndexPath) {
+    func checkForWinForIndexPath(indexPath: NSIndexPath) -> GameResult {
         let row = indexPath.section
         let column = indexPath.row
         
@@ -102,61 +99,27 @@ class GameLogicController: NSObject {
         takenCellCount += 1
         
         if rowCheckWon || columnCheckWon || leftDiagonalWon || rightDiagonalWon {
-            // Hide player's turn label
-//            infoLabel.hidden = true
-            
-            let messageInfo: String
             if currentPlayer == .Player1 {
-                messageInfo = "Player 1 Won"
-                //                saveGameResult(.Player1Won)
+                print("Player 1 Won")
+                return .Player1Won
             } else {
-                messageInfo = "Player 2 Won"
-                //                saveGameResult(.Player2Won)
+                print("Player 1 Won")
+                return .Player2Won
             }
-            
-            self.gameFininshed = true
-            
-            print(messageInfo)
-            
-            //            let alertController = UIAlertController(title: "Game Over!", message: messageInfo, preferredStyle: .Alert)
-            
-            //            let cancelAction = UIAlertAction(title: "Play Again", style: .Cancel) { (action:UIAlertAction!) in
-            //                self.gameFininshed = true
-            //                self.initialiseBoardValues()
-            //            }
-            //            alertController.addAction(cancelAction)
-            
-            //            self.presentViewController(alertController, animated: true, completion:nil)
         } else if takenCellCount == (boardSize * boardSize) {
-            // Hide player's turn label
-//            infoLabel.hidden = true
-            
-            self.gameFininshed = true
             print("Its a Tie")
             
-            //            saveGameResult(.Tie)
-            
-            //            let alertController = UIAlertController(title: "Game Over!", message: "It's a Tie", preferredStyle: .Alert)
-            //
-            //            let cancelAction = UIAlertAction(title: "Play Again", style: .Cancel) { (action:UIAlertAction!) in
-            //                self.gameFininshed = true
-            //                self.initialiseBoardValues()
-            //            }
-            //            alertController.addAction(cancelAction)
-            //
-            //            self.presentViewController(alertController, animated: true, completion:nil)
-            //        }
-        }
-    }
-    
-    func switchPlayerTurn() -> Player? {
-        if gameFininshed {
-            return nil
+            return .Tie
         }
         
-        currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
-//        let player = currentPlayer == .Player1 ? "Player 1" : "Player 2"
-//        infoLabel.text = "\(player) to move"
-        return currentPlayer
+        // Switch players' turn if not finished.
+        switchPlayerTurn()
+        
+        return .NotFinished
     }
+    
+    func switchPlayerTurn() {
+        currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
+    }
+
 }

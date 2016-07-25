@@ -32,25 +32,18 @@ class BoardSizeSelectionController: UIViewController {
         switch sender.tag {
         case 3:
             boardSize = 3
-            break
         case 4:
             boardSize = 4
-            break
         case 5:
             boardSize = 5
-            break
         case 6:
             boardSize = 6
-            break
         case 7:
             boardSize = 7
-            break
         case 8:
             boardSize = 8
-            break
         default:
             boardSize = 3
-            break
         }
         
         if let pickerDelagate = boardPickerDelegate {
