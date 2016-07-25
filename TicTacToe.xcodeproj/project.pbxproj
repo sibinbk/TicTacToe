@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C3475EB61D45CFE500FF5F3A /* GameLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3475EB51D45CFE500FF5F3A /* GameLogicController.swift */; };
 		C3F309051D3CDA4C00ADC39E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F309041D3CDA4C00ADC39E /* AppDelegate.swift */; };
 		C3F3090A1D3CDA4C00ADC39E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3F309081D3CDA4C00ADC39E /* Main.storyboard */; };
 		C3F3090C1D3CDA4C00ADC39E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3F3090B1D3CDA4C00ADC39E /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C3475EB51D45CFE500FF5F3A /* GameLogicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogicController.swift; sourceTree = "<group>"; };
 		C3F309011D3CDA4C00ADC39E /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3F309041D3CDA4C00ADC39E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3F309091D3CDA4C00ADC39E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				C3F3091E1D3DDA0600ADC39E /* BoardViewController.swift */,
 				C3F309281D3E51C700ADC39E /* BoardSizeSelectionController.swift */,
 				C3F3092A1D3E6B5700ADC39E /* HistoryViewController.swift */,
+				C3475EB51D45CFE500FF5F3A /* GameLogicController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3475EB61D45CFE500FF5F3A /* GameLogicController.swift in Sources */,
 				C3F309291D3E51C700ADC39E /* BoardSizeSelectionController.swift in Sources */,
 				C3F309051D3CDA4C00ADC39E /* AppDelegate.swift in Sources */,
 				C3F3091D1D3DCD8700ADC39E /* BoardCollectionViewCell.swift in Sources */,
