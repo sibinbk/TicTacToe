@@ -32,6 +32,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         //Set board size.
         boardSize = size
         
+        // Set Game Controller board size.
         gameController.boardSize = size
         
         // Resize Cells to fit in the view
@@ -188,7 +189,6 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         alertController.addAction(okAction)
         
         self.presentViewController(alertController, animated: true, completion:nil)
-
     }
     
     // MARK: UICollectionViewDataSource
@@ -204,9 +204,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! BoardCollectionViewCell
         
-        let gameCellItem = gameController.gameArray[indexPath.section][indexPath.row]
-
-        cell.boxLabel.text = gameCellItem.title
+        cell.boxLabel.text = gameController.cellTitleForIndexPath(indexPath)
         
         return cell
     }
@@ -214,17 +212,8 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
     // MARK: UICollectionViewDelegate
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let gameCellItem = gameController.gameArray[indexPath.section][indexPath.row]
-       
-        // check if already selected
-        if gameCellItem.isTaken {
-            return
-        }
-        
-        // Mark cell with corresponding indicator.
-        gameCellItem.title = gameController.currentPlayer == .Player1 ? "X" : "O"
-        gameCellItem.isTaken = true
-        gameController.gameArray[indexPath.section][indexPath.row] = gameCellItem
+
+        gameController.updateGameCellAtIndexPath(indexPath)
         
         collectionView.reloadItemsAtIndexPaths([indexPath])
         
@@ -249,7 +238,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
             announceResult("It's a Tie")
         case .NotFinished:
             infoLabel.hidden = false
-            infoLabel.text = gameController.currentPlayer == .Player1 ? "Player 1 to move" : "Player 2 to move"
+            infoLabel.text = gameController.nextPlayer() == .Player1 ? "Player 1 to move" : "Player 2 to move"
         }
     }
     

@@ -30,7 +30,7 @@ class GameLogicController: NSObject {
     var gameArray = [[GameCellItem]]()
     var takenCellCount = 0
     var currentPlayer = Player.Player1
-    
+     
     func reInitialize() {
         loadGameCellArray()
         // Reset current player
@@ -50,6 +50,25 @@ class GameLogicController: NSObject {
         }
     }
     
+    func updateGameCellAtIndexPath(indexPath: NSIndexPath) {
+        let gameCellItem = gameArray[indexPath.section][indexPath.row]
+        
+        // check if already selected
+        if gameCellItem.isTaken {
+            return
+        }
+        
+        // Mark cell with corresponding indicator.
+        gameCellItem.title = currentPlayer == .Player1 ? "X" : "O"
+        gameCellItem.isTaken = true
+        gameArray[indexPath.section][indexPath.row] = gameCellItem
+    }
+    
+    func cellTitleForIndexPath(indexPath: NSIndexPath) -> String {
+        let gameCellItem = gameArray[indexPath.section][indexPath.row]
+        return gameCellItem.title
+    }
+
     func checkForWinForIndexPath(indexPath: NSIndexPath) -> GameResult {
         let row = indexPath.section
         let column = indexPath.row
@@ -121,5 +140,8 @@ class GameLogicController: NSObject {
     func switchPlayerTurn() {
         currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
     }
-
+    
+    func nextPlayer() -> Player {
+        return currentPlayer
+    }
 }
