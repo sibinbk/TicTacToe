@@ -14,23 +14,23 @@ private let historySegueIdentifier = "HistoryViewSegue"
 
 class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegate {
 
-    enum Player: Int {
-        case Player1 = 0
-        case Player2 = 1
-    }
-    
-    enum WhoWon: Int {
-        case Player1Won = 0
-        case Player2Won = 1
-        case Tie = 2
-    }
+//    enum Player: Int {
+//        case Player1 = 0
+//        case Player2 = 1
+//    }
+//    
+//    enum WhoWon: Int {
+//        case Player1Won = 0
+//        case Player2Won = 1
+//        case Tie = 2
+//    }
     
     var boardSize = 3
 //    var gameArray = [[GameCellItem]]()
     var gameHistory: GameHistory!
 //    var gameFininshed = false
 //    var takenCellCount = 0
-    var currentPlayer = Player.Player1
+//    var currentPlayer = Player.Player1
     var infoLabel: UILabel!
     let gameController = GameLogicController()
     
@@ -74,7 +74,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         infoLabel.font = UIFont.boldSystemFontOfSize(24)
         infoLabel.textAlignment = NSTextAlignment.Center
         infoLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        let player = currentPlayer == .Player1 ? "Player 1" : "Player 2"
+        let player = gameController.currentPlayer == .Player1 ? "Player 1" : "Player 2"
         infoLabel.text = "\(player) to move"
         view.addSubview(infoLabel)
     }
@@ -242,7 +242,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         }
         
         // Mark cell with corresponding indicator.
-        gameCellItem.title = currentPlayer == .Player1 ? "X" : "O"
+        gameCellItem.title = gameController.currentPlayer == .Player1 ? "X" : "O"
         gameCellItem.isTaken = true
         gameController.gameArray[indexPath.section][indexPath.row] = gameCellItem
         
@@ -358,22 +358,22 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
 //        infoLabel.text = "\(player) to move"
 //    }
     
-    func saveGameResult(winner: WhoWon) {
-        switch winner {
-        case .Player1Won:
-            gameHistory.player1WinCount += 1
-        case .Player2Won:
-            gameHistory.player2WinCount += 1
-        case .Tie:
-            gameHistory.tieCount += 1
-        }
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setInteger(gameHistory.player1WinCount, forKey: "Player1WinCount")
-        defaults.setInteger(gameHistory.player2WinCount, forKey: "Player2WinCount")
-        defaults.setInteger(gameHistory.tieCount, forKey: "TieCount")
-        defaults.synchronize()
-    }
+//    func saveGameResult(winner: WhoWon) {
+//        switch winner {
+//        case .Player1Won:
+//            gameHistory.player1WinCount += 1
+//        case .Player2Won:
+//            gameHistory.player2WinCount += 1
+//        case .Tie:
+//            gameHistory.tieCount += 1
+//        }
+//        
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        defaults.setInteger(gameHistory.player1WinCount, forKey: "Player1WinCount")
+//        defaults.setInteger(gameHistory.player2WinCount, forKey: "Player2WinCount")
+//        defaults.setInteger(gameHistory.tieCount, forKey: "TieCount")
+//        defaults.synchronize()
+//    }
     
     func loadGameHistory() -> GameHistory {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -403,6 +403,7 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
 //        takenCellCount = 0
 //        gameFininshed = false
     
+        gameController.reInitialize()
         
         collectionView?.reloadData()
         infoLabel.text = "Player 1 to move"

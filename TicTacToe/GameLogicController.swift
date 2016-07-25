@@ -27,7 +27,7 @@ class GameLogicController: NSObject {
     }
     
     var gameArray = [[GameCellItem]]()
-    var gameHistory: GameHistory!
+//    var gameHistory: GameHistory!
     var gameFininshed = false
     var takenCellCount = 0
     var currentPlayer = Player.Player1
