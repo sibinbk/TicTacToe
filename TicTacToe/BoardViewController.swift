@@ -213,7 +213,8 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
-        gameController.updateGameCellAtIndexPath(indexPath)
+        // Exit if update cell fails.
+        guard let _ = gameController.updateIfEmptyCellAtIndexPath(indexPath) else { return }
         
         collectionView.reloadItemsAtIndexPaths([indexPath])
         
@@ -276,8 +277,6 @@ class BoardViewController: UICollectionViewController, BoardSizeSelectionDelegat
         NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
-    
-
     
     func initialiseBoardValues() {
         gameController.reInitialize()

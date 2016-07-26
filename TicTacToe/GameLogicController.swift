@@ -38,7 +38,7 @@ class GameLogicController: NSObject {
         takenCellCount = 0
     }
     
-    func loadGameCellArray() {
+    private func loadGameCellArray() {
         // Empty all cells
         for row in 0..<boardSize {
             var rowArray = [GameCellItem]()
@@ -50,18 +50,20 @@ class GameLogicController: NSObject {
         }
     }
     
-    func updateGameCellAtIndexPath(indexPath: NSIndexPath) {
+    func updateIfEmptyCellAtIndexPath(indexPath: NSIndexPath) -> Bool? {
         let gameCellItem = gameArray[indexPath.section][indexPath.row]
         
         // check if already selected
         if gameCellItem.isTaken {
-            return
+            return nil
         }
         
         // Mark cell with corresponding indicator.
         gameCellItem.title = currentPlayer == .Player1 ? "X" : "O"
         gameCellItem.isTaken = true
         gameArray[indexPath.section][indexPath.row] = gameCellItem
+        
+        return true
     }
     
     func cellTitleForIndexPath(indexPath: NSIndexPath) -> String {
@@ -69,66 +71,24 @@ class GameLogicController: NSObject {
         return gameCellItem.title
     }
 
+    //MARK: - Check Player won.
+    
     func checkForWinForIndexPath(indexPath: NSIndexPath) -> GameResult {
-        let row = indexPath.section
-        let column = indexPath.row
-        
-        var rowCheckWon = true
-        var columnCheckWon = true
-        var leftDiagonalWon = true
-        var rightDiagonalWon = true
-        
-        for column in 0..<boardSize-1 {
-            let firstItem = gameArray[row][column]
-            let secondItem = gameArray[row][column+1]
-            if firstItem.title == "" || firstItem.title != secondItem.title {
-                rowCheckWon = false
-                break
-            }
-        }
-        
-        for row in 0..<boardSize-1 {
-            let firstItem = gameArray[row][column]
-            let secondItem = gameArray[row+1][column]
-            if firstItem.title == "" || firstItem.title != secondItem.title {
-                columnCheckWon = false
-                break
-            }
-        }
-        
-        for i in 0..<boardSize-1 {
-            let firstItem = gameArray[i][i]
-            let secondItem = gameArray[i+1][i+1]
-            if firstItem.title == "" || firstItem.title != secondItem.title {
-                leftDiagonalWon = false
-                break
-            }
-        }
-        
-        for i in 0..<boardSize-1 {
-            let firstItem = gameArray[boardSize-1-i][i]
-            let secondItem = gameArray[boardSize-2-i][i+1]
-            if firstItem.title == "" || firstItem.title != secondItem.title {
-                rightDiagonalWon = false
-                break
-            }
-        }
-        
         // Increment taken cell count.
         takenCellCount += 1
         
-        if rowCheckWon || columnCheckWon || leftDiagonalWon || rightDiagonalWon {
-            if currentPlayer == .Player1 {
-                print("Player 1 Won")
-                return .Player1Won
-            } else {
-                print("Player 1 Won")
-                return .Player2Won
-            }
-        } else if takenCellCount == (boardSize * boardSize) {
-            print("Its a Tie")
-            
+        // Check if all the cells are filled.
+        if takenCellCount >= (boardSize * boardSize) {
             return .Tie
+        }
+
+        let rowCheckWon = checkWinForRow(indexPath.section)
+        let columnCheckWon = checkWinForColumn(indexPath.row)
+        let leftDiagonalWon = checkWinForLeftDiagonal()
+        let rightDiagonalWon = checkWinForRightDiagonal()
+        
+        if rowCheckWon || columnCheckWon || leftDiagonalWon || rightDiagonalWon {
+            return currentPlayer == .Player1 ? .Player1Won : .Player2Won
         }
         
         // Switch players' turn if not finished.
@@ -137,9 +97,61 @@ class GameLogicController: NSObject {
         return .NotFinished
     }
     
-    func switchPlayerTurn() {
+    // Check row of latest move.
+    private func checkWinForRow(row: Int) -> Bool {
+        for column in 0..<boardSize-1 {
+            let firstItem = gameArray[row][column]
+            let secondItem = gameArray[row][column+1]
+            if firstItem.title == "" || firstItem.title != secondItem.title {
+                return false
+            }
+        }
+        return true
+    }
+    
+    // Check column of latest move.
+    private func checkWinForColumn(column: Int) -> Bool {
+        for row in 0..<boardSize-1 {
+            let firstItem = gameArray[row][column]
+            let secondItem = gameArray[row+1][column]
+            if firstItem.title == "" || firstItem.title != secondItem.title {
+                return false
+            }
+        }
+        return true
+    }
+    
+    // Check left-top to bottom-right diagonal.
+    private func checkWinForLeftDiagonal() -> Bool {
+        for i in 0..<boardSize-1 {
+            let firstItem = gameArray[i][i]
+            let secondItem = gameArray[i+1][i+1]
+            if firstItem.title == "" || firstItem.title != secondItem.title {
+                return false
+            }
+        }
+        return true
+    }
+    
+    // Check left-bottom to right-top diagonal.
+    private func checkWinForRightDiagonal() -> Bool {
+        for i in 0..<boardSize-1 {
+            let firstItem = gameArray[boardSize-1-i][i]
+            let secondItem = gameArray[boardSize-2-i][i+1]
+            if firstItem.title == "" || firstItem.title != secondItem.title {
+                return false
+            }
+        }
+        return true
+    }
+    
+    //MARK: - Switch player's turn.
+    
+    private func switchPlayerTurn() {
         currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
     }
+    
+    //MARK: - Return next player's turn.
     
     func nextPlayer() -> Player {
         return currentPlayer
