@@ -50,6 +50,8 @@ class GameLogicController: NSObject {
         }
     }
     
+    // MARK: - Cell Update method.
+    
     func updateIfEmptyCellAtIndexPath(indexPath: NSIndexPath) -> Bool? {
         let gameCellItem = gameArray[indexPath.section][indexPath.row]
         
@@ -65,6 +67,8 @@ class GameLogicController: NSObject {
         
         return true
     }
+    
+    //MARK : - Returns Cell title
     
     func cellTitleForIndexPath(indexPath: NSIndexPath) -> String {
         let gameCellItem = gameArray[indexPath.section][indexPath.row]
@@ -151,7 +155,7 @@ class GameLogicController: NSObject {
         currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
     }
     
-    //MARK: - Return next player's turn.
+    //MARK: - Returns next player.
     
     func nextPlayer() -> Player {
         return currentPlayer
