@@ -38,7 +38,7 @@ class GameLogicController: NSObject {
         takenCellCount = 0
     }
     
-    private func loadGameCellArray() {
+    internal func loadGameCellArray() {
         // Empty all cells
         for row in 0..<boardSize {
             var rowArray = [GameCellItem]()
@@ -102,7 +102,7 @@ class GameLogicController: NSObject {
     }
     
     // Check row of latest move.
-    private func checkWinForRow(row: Int) -> Bool {
+    internal func checkWinForRow(row: Int) -> Bool {
         for column in 0..<boardSize-1 {
             let firstItem = gameArray[row][column]
             let secondItem = gameArray[row][column+1]
@@ -114,7 +114,7 @@ class GameLogicController: NSObject {
     }
     
     // Check column of latest move.
-    private func checkWinForColumn(column: Int) -> Bool {
+    internal func checkWinForColumn(column: Int) -> Bool {
         for row in 0..<boardSize-1 {
             let firstItem = gameArray[row][column]
             let secondItem = gameArray[row+1][column]
@@ -126,7 +126,7 @@ class GameLogicController: NSObject {
     }
     
     // Check left-top to bottom-right diagonal.
-    private func checkWinForLeftDiagonal() -> Bool {
+    internal func checkWinForLeftDiagonal() -> Bool {
         for i in 0..<boardSize-1 {
             let firstItem = gameArray[i][i]
             let secondItem = gameArray[i+1][i+1]
@@ -138,7 +138,7 @@ class GameLogicController: NSObject {
     }
     
     // Check left-bottom to right-top diagonal.
-    private func checkWinForRightDiagonal() -> Bool {
+    internal func checkWinForRightDiagonal() -> Bool {
         for i in 0..<boardSize-1 {
             let firstItem = gameArray[boardSize-1-i][i]
             let secondItem = gameArray[boardSize-2-i][i+1]
@@ -151,7 +151,7 @@ class GameLogicController: NSObject {
     
     //MARK: - Switch player's turn.
     
-    private func switchPlayerTurn() {
+    internal func switchPlayerTurn() {
         currentPlayer = currentPlayer == .Player1 ? .Player2 : .Player1
     }
     
